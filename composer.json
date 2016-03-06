@@ -19,7 +19,8 @@
     "require-dev": {
         "php-http/adapter-integration-tests": "^0.3",
         "php-http/client-common": "^1.0",
-        "guzzlehttp/psr7": "^1.2"
+        "guzzlehttp/psr7": "^1.2",
+        "puli/composer-plugin": "1.0.0-beta9"
     },
     "provide": {
         "php-http/client-implementation": "1.0"
@@ -44,5 +45,5 @@
         }
     },
     "prefer-stable": true,
-    "minimum-stability": "stable"
+    "minimum-stability": "beta"
 }
