@@ -1,0 +1,10 @@
+{
+    "version": "1.0",
+    "bindings": {
+        "619bb44c-302a-43c6-9ae1-583567694a7f": {
+            "_class": "Puli\\Discovery\\Binding\\ClassBinding",
+            "class": "Http\\Adapter\\Buzz\\Client",
+            "type": "Http\\Client\\HttpClient"
+        }
+    }
+}
