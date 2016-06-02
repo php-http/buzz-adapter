@@ -2,6 +2,7 @@
 
 namespace Http\Adapter\Buzz\Tests;
 
+use Buzz\Browser;
 use Http\Adapter\Buzz\Client;
 use Http\Client\Tests\HttpClientTest;
 use Http\Message\MessageFactory\GuzzleMessageFactory;
@@ -16,8 +17,11 @@ abstract class HttpAdapterTest extends HttpClientTest
      */
     protected function createHttpAdapter()
     {
+        $buzz = $this->createBuzzClient();
+        $buzz->getClient()->setMaxRedirects(0);
+
         return new Client(
-            $this->createBuzzClient(),
+            $buzz,
             new GuzzleMessageFactory()
         );
     }
@@ -25,7 +29,7 @@ abstract class HttpAdapterTest extends HttpClientTest
     /**
      * Returns a handler for the client.
      *
-     * @return object
+     * @return Browser
      */
     abstract protected function createBuzzClient();
 }

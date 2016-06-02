@@ -2,6 +2,7 @@
 
 namespace Http\Adapter\Buzz\Tests;
 
+use Buzz\Browser;
 use Buzz\Client\FileGetContents;
 
 /**
@@ -14,6 +15,6 @@ class FileGetContentsHttpAdapterTest extends HttpAdapterTest
      */
     protected function createBuzzClient()
     {
-        return new FileGetContents();
+        return new Browser(new FileGetContents());
     }
 }
