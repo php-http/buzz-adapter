@@ -30,7 +30,8 @@ class Client implements HttpClient
 
     /**
      * Client constructor.
-     * @param Browser|null $client
+     *
+     * @param Browser|null        $client
      * @param MessageFactory|null $messageFactory
      */
     public function __construct(Browser $client = null, MessageFactory $messageFactory = null)
@@ -116,6 +117,7 @@ class Client implements HttpClient
      * Get headers from a Buzz response.
      *
      * @param BuzzResponse $response
+     *
      * @return array
      */
     private function getBuzzHeaders(BuzzResponse $response)
