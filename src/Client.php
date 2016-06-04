@@ -36,7 +36,13 @@ class Client implements HttpClient
      */
     public function __construct(Browser $client = null, MessageFactory $messageFactory = null)
     {
-        $this->client = $client ?: new Browser();
+        if( ! $client)
+        {
+            $client = new Browser();
+            $client->getClient()->setMaxRedirects(0);
+        }
+
+        $this->client = $client;
         $this->messageFactory = $messageFactory ?: MessageFactoryDiscovery::find();
     }
 
