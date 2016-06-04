@@ -36,8 +36,7 @@ class Client implements HttpClient
      */
     public function __construct(Browser $client = null, MessageFactory $messageFactory = null)
     {
-        if( ! $client)
-        {
+        if( ! $client) {
             $client = new Browser();
             $client->getClient()->setMaxRedirects(0);
         }
