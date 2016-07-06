@@ -17,6 +17,7 @@
         "php-http/discovery": "^0.9"
     },
     "require-dev": {
+        "ext-curl": "*",
         "php-http/adapter-integration-tests": "^0.3",
         "php-http/client-common": "^1.0",
         "guzzlehttp/psr7": "^1.2",

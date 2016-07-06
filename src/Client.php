@@ -2,10 +2,13 @@
 
 namespace Http\Adapter\Buzz;
 
+use Buzz\Browser;
 use Buzz\Client\ClientInterface;
+use Buzz\Client\Curl;
 use Buzz\Client\FileGetContents;
 use Buzz\Exception as BuzzException;
 use Buzz\Message\Request as BuzzRequest;
+use Buzz\Message\RequestInterface as BuzzRequestInterface;
 use Buzz\Message\Response as BuzzResponse;
 use Http\Client\HttpClient;
 use Http\Discovery\MessageFactoryDiscovery;
@@ -30,13 +33,28 @@ class Client implements HttpClient
     private $messageFactory;
 
     /**
-     * @param FileGetContents|null $client
-     * @param MessageFactory|null  $messageFactory
+     * @param ClientInterface|Browser|null $client
+     * @param MessageFactory|null          $messageFactory
      */
-    public function __construct(FileGetContents $client = null, MessageFactory $messageFactory = null)
+    public function __construct($client = null, MessageFactory $messageFactory = null)
     {
-        $this->client = $client ?: new FileGetContents();
-        $this->client->setMaxRedirects(0);
+        $this->client = $client;
+
+        if ($this->client === null) {
+            $this->client = new FileGetContents();
+            $this->client->setMaxRedirects(0);
+        }
+
+        if ((!$this->client instanceof ClientInterface) && (!$this->client instanceof Browser)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'The client passed to the Buzz adapter must either implement %s or be an instance of %s. You passed %s.',
+                    ClientInterface::class,
+                    Browser::class,
+                    is_object($client) ? get_class($client) : gettype($client)
+                )
+            );
+        }
 
         $this->messageFactory = $messageFactory ?: MessageFactoryDiscovery::find();
     }
@@ -46,6 +64,8 @@ class Client implements HttpClient
      */
     public function sendRequest(RequestInterface $request)
     {
+        $this->assertRequestHasValidBody($request);
+
         $buzzRequest = $this->createRequest($request);
 
         try {
@@ -132,5 +152,32 @@ class Client implements HttpClient
         }
 
         return $headers;
+    }
+
+    /**
+     * Assert that the request has a valid body based on the request method.
+     *
+     * @param RequestInterface $request
+     */
+    private function assertRequestHasValidBody(RequestInterface $request)
+    {
+        $validMethods = [
+            BuzzRequestInterface::METHOD_POST,
+            BuzzRequestInterface::METHOD_PUT,
+            BuzzRequestInterface::METHOD_DELETE,
+            BuzzRequestInterface::METHOD_PATCH,
+            BuzzRequestInterface::METHOD_OPTIONS,
+        ];
+
+        // The Buzz Curl client does not send request bodies for request methods such as GET, HEAD and TRACE. Instead of
+        // silently ignoring the request body in these cases, throw an exception to make users aware.
+        if ($this->client instanceof Curl &&
+            $request->getBody()->getSize() &&
+            !in_array(strtoupper($request->getMethod()), $validMethods, true)
+        ) {
+            throw new \InvalidArgumentException(
+                sprintf('%s does not support %s requests with a body', Curl::class, $request->getMethod())
+            );
+        }
     }
 }
