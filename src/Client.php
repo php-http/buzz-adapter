@@ -2,17 +2,16 @@
 
 namespace Http\Adapter\Buzz;
 
-use Buzz\Client\ClientInterface;
-use Buzz\Client\FileGetContents;
+use Buzz\Browser;
 use Buzz\Exception as BuzzException;
 use Buzz\Message\Request as BuzzRequest;
 use Buzz\Message\Response as BuzzResponse;
+use Http\Client\Exception as HttplugException;
 use Http\Client\HttpClient;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Message\MessageFactory;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Http\Client\Exception as HttplugException;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -20,7 +19,7 @@ use Http\Client\Exception as HttplugException;
 class Client implements HttpClient
 {
     /**
-     * @var ClientInterface
+     * @var Browser
      */
     private $client;
 
@@ -30,14 +29,19 @@ class Client implements HttpClient
     private $messageFactory;
 
     /**
-     * @param FileGetContents|null $client
-     * @param MessageFactory|null  $messageFactory
+     * Client constructor.
+     *
+     * @param Browser|null        $client
+     * @param MessageFactory|null $messageFactory
      */
-    public function __construct(FileGetContents $client = null, MessageFactory $messageFactory = null)
+    public function __construct(Browser $client = null, MessageFactory $messageFactory = null)
     {
-        $this->client = $client ?: new FileGetContents();
-        $this->client->setMaxRedirects(0);
+        if (!$client) {
+            $client = new Browser();
+            $client->getClient()->setMaxRedirects(0);
+        }
 
+        $this->client = $client;
         $this->messageFactory = $messageFactory ?: MessageFactoryDiscovery::find();
     }
 
