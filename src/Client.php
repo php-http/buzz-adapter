@@ -117,8 +117,7 @@ class Client implements HttpClient
     /**
      * Get headers from a Buzz response.
      *
-     * @param RequestInterface $request
-     * @param BuzzRequest      $buzzRequest
+     * @param BuzzResponse $response
      *
      * @return array
      */
