@@ -14,6 +14,9 @@ class FileGetContentsHttpAdapterTest extends HttpAdapterTest
      */
     protected function createBuzzClient()
     {
-        return new FileGetContents();
+        $fileGetContents = new FileGetContents();
+        $fileGetContents->setMaxRedirects(0);
+
+        return $fileGetContents;
     }
 }
