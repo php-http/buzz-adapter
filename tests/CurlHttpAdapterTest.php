@@ -3,7 +3,6 @@
 namespace Http\Adapter\Buzz\Tests;
 
 use Buzz\Client\Curl;
-use Http\Adapter\Buzz\Client;
 use Buzz\Message\RequestInterface as BuzzRequestInterface;
 
 class CurlHttpAdapterTest extends HttpAdapterTest

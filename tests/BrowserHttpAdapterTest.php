@@ -3,7 +3,6 @@
 namespace Http\Adapter\Buzz\Tests;
 
 use Buzz\Browser;
-use Buzz\Client\FileGetContents;
 
 class BrowserHttpAdapterTest extends HttpAdapterTest
 {
