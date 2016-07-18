@@ -18,9 +18,8 @@
     },
     "require-dev": {
         "ext-curl": "*",
-        "php-http/adapter-integration-tests": "^0.4",
-        "php-http/client-common": "^1.0",
-        "guzzlehttp/psr7": "^1.2"
+        "php-http/client-integration-tests": "^0.5",
+        "php-http/client-common": "^1.0"
     },
     "provide": {
         "php-http/client-implementation": "1.0"
