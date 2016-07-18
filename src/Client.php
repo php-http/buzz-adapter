@@ -12,7 +12,7 @@ use Buzz\Message\RequestInterface as BuzzRequestInterface;
 use Buzz\Message\Response as BuzzResponse;
 use Http\Client\HttpClient;
 use Http\Discovery\MessageFactoryDiscovery;
-use Http\Message\MessageFactory;
+use Http\Message\ResponseFactory;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Http\Client\Exception as HttplugException;
@@ -28,15 +28,15 @@ class Client implements HttpClient
     private $client;
 
     /**
-     * @var MessageFactory
+     * @var ResponseFactory
      */
-    private $messageFactory;
+    private $responseFactory;
 
     /**
      * @param ClientInterface|Browser|null $client
-     * @param MessageFactory|null          $messageFactory
+     * @param ResponseFactory|null         $responseFactory
      */
-    public function __construct($client = null, MessageFactory $messageFactory = null)
+    public function __construct($client = null, ResponseFactory $responseFactory = null)
     {
         $this->client = $client;
 
@@ -56,7 +56,7 @@ class Client implements HttpClient
             );
         }
 
-        $this->messageFactory = $messageFactory ?: MessageFactoryDiscovery::find();
+        $this->responseFactory = $responseFactory ?: MessageFactoryDiscovery::find();
     }
 
     /**
@@ -109,7 +109,7 @@ class Client implements HttpClient
     {
         $body = $response->getContent();
 
-        return $this->messageFactory->createResponse(
+        return $this->responseFactory->createResponse(
             $response->getStatusCode(),
             null,
             $this->getBuzzHeaders($response),
