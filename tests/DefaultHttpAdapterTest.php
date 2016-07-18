@@ -10,6 +10,6 @@ class DefaultHttpAdapterTest extends HttpAdapterTest
     protected function createBuzzClient()
     {
         // returning null here should cause the adapter to create a default client for us
-        return null;
+        return;
     }
 }
