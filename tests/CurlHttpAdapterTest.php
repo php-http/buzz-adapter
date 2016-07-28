@@ -4,6 +4,7 @@ namespace Http\Adapter\Buzz\Tests;
 
 use Buzz\Client\Curl;
 use Buzz\Message\RequestInterface as BuzzRequestInterface;
+use Http\Client\Exception\RequestException;
 
 class CurlHttpAdapterTest extends HttpAdapterTest
 {
@@ -34,7 +35,7 @@ class CurlHttpAdapterTest extends HttpAdapterTest
 
         if (!in_array($method, $validMethods, true) && $body) {
             $this->setExpectedException(
-                \InvalidArgumentException::class,
+                RequestException::class,
                 sprintf('Buzz\Client\Curl does not support %s requests with a body', $method)
             );
         }
@@ -50,7 +51,7 @@ class CurlHttpAdapterTest extends HttpAdapterTest
     {
         if ($body && $protocolVersion === '1.1') {
             $this->setExpectedException(
-                \InvalidArgumentException::class,
+                RequestException::class,
                 'Buzz\Client\Curl does not support GET requests with a body'
             );
         }

@@ -178,7 +178,8 @@ class Client implements HttpClient
             !in_array(strtoupper($request->getMethod()), $validMethods, true)
         ) {
             throw new HttplugException\RequestException(
-                sprintf('%s does not support %s requests with a body', Curl::class, $request->getMethod())
+                sprintf('%s does not support %s requests with a body', Curl::class, $request->getMethod()),
+                $request
             );
         }
     }
