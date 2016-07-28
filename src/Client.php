@@ -73,7 +73,7 @@ class Client implements HttpClient
             $this->client->send($buzzRequest, $buzzResponse);
         } catch (BuzzException\RequestException $e) {
             throw new HttplugException\RequestException($e->getMessage(), $request, $e);
-        }catch (BuzzException\ClientException $e) {
+        } catch (BuzzException\ClientException $e) {
             throw new HttplugException\TransferException($e->getMessage(), 0, $e);
         }
 
