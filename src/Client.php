@@ -71,7 +71,9 @@ class Client implements HttpClient
         try {
             $buzzResponse = new BuzzResponse();
             $this->client->send($buzzRequest, $buzzResponse);
-        } catch (BuzzException\ClientException $e) {
+        } catch (BuzzException\RequestException $e) {
+            throw new HttplugException\RequestException($e->getMessage(), $request, $e);
+        }catch (BuzzException\ClientException $e) {
             throw new HttplugException\TransferException($e->getMessage(), 0, $e);
         }
 
@@ -175,7 +177,7 @@ class Client implements HttpClient
             $request->getBody()->getSize() &&
             !in_array(strtoupper($request->getMethod()), $validMethods, true)
         ) {
-            throw new \InvalidArgumentException(
+            throw new HttplugException\RequestException(
                 sprintf('%s does not support %s requests with a body', Curl::class, $request->getMethod())
             );
         }
