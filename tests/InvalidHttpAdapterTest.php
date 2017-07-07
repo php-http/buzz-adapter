@@ -4,8 +4,9 @@ namespace Http\Adapter\Buzz\Tests;
 
 use Http\Adapter\Buzz\Client;
 use Http\Message\MessageFactory\GuzzleMessageFactory;
+use PHPUnit\Framework\TestCase;
 
-class InvalidHttpAdapterTest extends \PHPUnit_Framework_TestCase
+class InvalidHttpAdapterTest extends TestCase
 {
     /**
      * @expectedException \InvalidArgumentException
