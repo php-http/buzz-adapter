@@ -34,10 +34,8 @@ class CurlHttpAdapterTest extends HttpAdapterTest
         ];
 
         if (!in_array($method, $validMethods, true) && $body) {
-            $this->setExpectedException(
-                RequestException::class,
-                sprintf('Buzz\Client\Curl does not support %s requests with a body', $method)
-            );
+            $this->expectException(RequestException::class);
+            $this->expectExceptionMessage(sprintf('Buzz\Client\Curl does not support %s requests with a body', $method));
         }
 
         parent::testSendRequest($method, $uri, $headers, $body);
@@ -50,10 +48,8 @@ class CurlHttpAdapterTest extends HttpAdapterTest
     public function testSendRequestWithOutcome($uriAndOutcome, $protocolVersion, array $headers, $body)
     {
         if ($body && $protocolVersion === '1.1') {
-            $this->setExpectedException(
-                RequestException::class,
-                'Buzz\Client\Curl does not support GET requests with a body'
-            );
+            $this->expectException(RequestException::class);
+            $this->expectExceptionMessage('Buzz\Client\Curl does not support GET requests with a body');
         }
 
         parent::testSendRequestWithOutcome($uriAndOutcome, $protocolVersion, $headers, $body);
