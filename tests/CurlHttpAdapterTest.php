@@ -54,7 +54,7 @@ class CurlHttpAdapterTest extends HttpAdapterTest
     }
 
     /**
-     * To be compatible with both PHPUnit 5 and 6
+     * To be compatible with both PHPUnit 5 and 6.
      *
      * @param string $class
      * @param string $message
