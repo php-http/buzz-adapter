@@ -1,11 +1,12 @@
 # Change Log
 
-## UNRELEASED
+## 1.0.0
 
 ### Changed
 
 - We throw a `RequestException` instead of a `\InvalidExcpetion` when using Buzz' curl client and trying to send GET request with body.
-- We throw a `NetworkException` on network timeout.  
+- We throw a `NetworkException` on network timeout.
+- We require version 0.15.1 of `kriswallsmith/buzz`.  
 
 ## 0.3.0 - 2016-07-18
 
