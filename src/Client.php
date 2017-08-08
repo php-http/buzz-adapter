@@ -72,6 +72,10 @@ class Client implements HttpClient
             $buzzResponse = new BuzzResponse();
             $this->client->send($buzzRequest, $buzzResponse);
         } catch (BuzzException\RequestException $e) {
+            if (28 === $e->getCode() || strstr($e->getMessage(), 'failed to open stream: Operation timed out')) {
+                // Timeout
+                throw new HttplugException\NetworkException($e->getMessage(), $request, $e);
+            }
             throw new HttplugException\RequestException($e->getMessage(), $request, $e);
         } catch (BuzzException\ClientException $e) {
             throw new HttplugException\TransferException($e->getMessage(), 0, $e);

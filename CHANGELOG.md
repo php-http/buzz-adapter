@@ -4,7 +4,8 @@
 
 ### Changed
 
-- We throw a `RequestException` instead of a `\InvalidExcpetion` when using Buzz' curl client and trying to send GET request with body. 
+- We throw a `RequestException` instead of a `\InvalidExcpetion` when using Buzz' curl client and trying to send GET request with body.
+- We throw a `NetworkException` on network timeout.  
 
 ## 0.3.0 - 2016-07-18
 
