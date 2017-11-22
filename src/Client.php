@@ -40,7 +40,7 @@ class Client implements HttpClient
     {
         $this->client = $client;
 
-        if ($this->client === null) {
+        if (null === $this->client) {
             $this->client = new FileGetContents();
             $this->client->setMaxRedirects(0);
         }
@@ -76,6 +76,7 @@ class Client implements HttpClient
                 // Timeout
                 throw new HttplugException\NetworkException($e->getMessage(), $request, $e);
             }
+
             throw new HttplugException\RequestException($e->getMessage(), $request, $e);
         } catch (BuzzException\ClientException $e) {
             throw new HttplugException\TransferException($e->getMessage(), 0, $e);

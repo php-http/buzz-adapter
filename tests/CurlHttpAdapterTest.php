@@ -46,7 +46,7 @@ class CurlHttpAdapterTest extends HttpAdapterTest
      */
     public function testSendRequestWithOutcome($uriAndOutcome, $protocolVersion, array $headers, $body)
     {
-        if ($body && $protocolVersion === '1.1') {
+        if ($body && '1.1' === $protocolVersion) {
             $this->exception(RequestException::class, 'Buzz\Client\Curl does not support GET requests with a body');
         }
 
