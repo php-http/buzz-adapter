@@ -9,6 +9,8 @@
 
 **Buzz HTTP Adapter.**
 
+**Deprecation notice:** This package is deprecated with the release of `kriswallsmith/Buzz` 1.0. Please use the Buzz client directly. See https://github.com/kriswallsmith/Buzz.
+
 
 ## Install
 
